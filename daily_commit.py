@@ -32,7 +32,7 @@ with open(file_path, "a") as file:
     file.write(f"Commit on {today}\n")
 
 # Git commands
-os.system("git -c credential.helper= '!f() { echo username=your-username; echo password=$GITHUB_PAT; }; f' push origin main")
+#os.system("git -c credential.helper= '!f() { echo username=your-username; echo password=$GITHUB_PAT; }; f' push origin main")
 
 commands = [#"git -c credential.helper= '!f() { echo username=your-username; echo password=$GITHUB_PAT; };",
 "git add .",
