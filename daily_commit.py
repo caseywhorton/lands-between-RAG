@@ -22,7 +22,7 @@ commit_messages = [
     "Automated push at " + today,
 ]
 commit_message = random.choice(commit_messages)
-
+commit_message = "auto test"
 # File to update (create if not exists)
 file_name = "daily_commit.txt"
 file_path = os.path.join(os.getcwd(), file_name)
