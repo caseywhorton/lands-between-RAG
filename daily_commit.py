@@ -32,7 +32,12 @@ with open(file_path, "a") as file:
     file.write(f"Commit on {today}\n")
 
 # Git commands
-commands = ["git add .", f'git commit -m "{commit_message}"', "git push origin main"]
+os.system("git -c credential.helper= '!f() { echo username=your-username; echo password=$GITHUB_PAT; }; f' push origin main")
+
+commands = [#"git -c credential.helper= '!f() { echo username=your-username; echo password=$GITHUB_PAT; };",
+"git add .",
+ f'git commit -m "{commit_message}"',
+  "git push origin main"]
 
 # Execute Git commands
 for command in commands:
