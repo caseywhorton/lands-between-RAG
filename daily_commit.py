@@ -38,6 +38,7 @@ github_pat = os.getenv("GITHUB_PAT")
 commands = [
     "git add .",
     f'git commit -m "{commit_message}"',
+    'git push origin main'
     #f'git -c credential.helper=\'!f() {{ echo username={github_username}; echo password={github_pat}; }}; f\' push origin main'
 ]
 
