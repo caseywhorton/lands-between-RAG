@@ -2,6 +2,10 @@
 
 Not all models are the same.
 
+## Models
+
+Embeddings: all-mpnet-base-v2
+
 Good: all-mpnet-base-v2
 Bad: Bert-uncased
 
@@ -12,6 +16,8 @@ Had to embed the `full_text` from the comments and/or body of the Reddit post.
 Had to remove excessive markdown formatting using regex.
 
 In this example, I had a reddit post that was directly related to a single weapon.
+
+This is a chance to show a hallucination.
 
 When I tried the openAI API to ask about the Venemous Fang weapon it said something like 'i dont have access to new reddit stuff', but when I added the retrieved documents from my Pinecone index then it returned some viable results.
 
