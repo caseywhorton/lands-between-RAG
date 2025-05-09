@@ -49,6 +49,30 @@ The RAG pipeline follows three main stages:
 
 ---
 
+## Case Study: Venomous Fang Weapon
+
+Using the latest Reddit posts on the game within a RAG (Retrieval-Augmented Generation) application allows the language model to return up-to-date results that are typically outside the scope of a pre-trained model. This showcases the core value of RAG systems — grounding responses in real-time, community-sourced knowledge.
+
+### Prompt (No Context Provided)
+
+> _"Can you briefly tell me about the Venomous Fang weapon in Elden Ring?"_
+
+**Response:**
+
+> As of now, specific details about the Venomous Fang weapon in Elden Ring are not available. Elden Ring is an upcoming action role-playing game developed by FromSoftware and published by Bandai Namco Entertainment. The game's information is still being released, and specifics about individual weapons like the Venomous Fang have not been fully disclosed yet. Please stay tuned to the official updates for the most accurate information.
+
+### Prompt (With Reddit Context Injected via Pinecone Retrieval)
+
+> _"Can you briefly tell me about the Venomous Fang weapon in Elden Ring?"_
+
+**Response:**
+
+> The Venomous Fang is a unique fist weapon in Elden Ring known for its rapid strikes and native poison status. It's lightweight and can inflict "Deadly Poison" on enemies, which deals significant damage over time. It can be enhanced by applying Poison or Occult Affinities, tripling the poison damage or increasing the poison buildup respectively. By acquiring two Venomous Fangs, you can apply different affinities to each, allowing you to build up multiple status effects simultaneously. It pairs well with the Poison Flower Blooms Twice Ash of War, which delivers a powerful attack when an enemy is poisoned. The Venomous Fang's effectiveness can be further boosted with specific equipment and talismans, like the Mushroom Crown, which raises attack power after poisoning an enemy.
+
+### Takeaway
+
+Including a Reddit post that discusses the **Venomous Fang** weapon provides the necessary context for GPT to generate a more accurate and helpful answer. This demonstrates the strength of RAG systems: by pairing relevant, up-to-date information with GPT’s natural language generation, we get responses that are both **informed** and **fluent**.
+
 ## 🛠️ Setup Instructions
 
 1. Set up a **SageMaker Studio Domain**.
