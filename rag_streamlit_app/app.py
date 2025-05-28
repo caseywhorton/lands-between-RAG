@@ -5,19 +5,26 @@ st.title("🔍 Elden Ring Build Finder")
 
 query = st.text_input("Ask your question:")
 
+rerank_enabled = st.checkbox("🔄 Enable reranking of retrieved chunks", value=False)
+
+matches = []
+orig_scores = []
+reranked_scores = []
+
 if query:
     with st.spinner("Fetching answer..."):
-        matches, scores = get_top_matches(query)
+        matches, orig_scores, reranked_scores = get_top_matches(query, rerank=rerank_enabled)
         answer = generate_answer(query, matches)
 
-    st.subheader("📖 Answer")
-    st.write(answer)
+        st.subheader("📖 Answer")
+        st.write(answer)
 
-show_chunks = st.checkbox("Show retrieved chunks and similarity scores")
+if st.checkbox("🧩 Show retrieved chunks"):
+    st.subheader("Context Chunks")
+    for i, (doc, o_score, r_score) in enumerate(zip(matches, orig_scores, reranked_scores), 1):
+        st.markdown(f"**Chunk {i}**")
+        st.markdown(f"• Original Score: `{o_score:.4f}`")
+        st.markdown(f"• Reranked Score: `{r_score:.4f}`")
+        st.write(doc)
+        st.markdown("---")
 
-if show_chunks:
-    st.subheader("📚 Retrieved Context Chunks")
-    for i, (chunk, score) in enumerate(zip(matches, scores), 1):
-        st.markdown(f"**Chunk {i} (Score: {score:.3f})**")
-        st.write(chunk)
-        st.write("---")
