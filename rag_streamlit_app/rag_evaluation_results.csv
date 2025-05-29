@@ -1,0 +1,36 @@
+query,reference,generated,rouge1,rougeL,bleu,keyword_match
+What is the Venomous Fang weapon in Elden Ring?,Venomous Fang is a claw weapon in Elden Ring that causes poison buildup.,"The Venomous Fang is a fist weapon in Elden Ring. It is capable of inflicting ""Deadly Poison"" on enemies, which deals significant damage over time. The weapon is light-weight and has a fast attack speed, making it effective for rapidly building up poison status. The Venomous Fang can be further enhanced by applying Poison or Occult affinities, which extend the duration of the poison or increase the poison build-up respectively. By wielding two Venomous Fang weapons with different affinities, you can inflict multiple status effects at once. Various equipment and talismans can boost the Venomous Fang's effectiveness, increasing its attack power or enhancing its poison capabilities.",0.1475,0.1475,0.0317,0.6667
+What is the easiest weapon to beat Elden Ring using a Strenght/Faith Build?,"Using the Blasphemous Blade, you can 2-hand the weapon and use the sword's ability to deal high damage.","For a Strength/Faith build in Elden Ring, a great weapon choice would be the Blasphemous Blade. Its inherent strength scaling makes it an excellent choice for strength builds, and when two-handed, it becomes even more powerful. The ""Taker's Flame"" skill can deal significant damage and can be a game-changer in tough fights.
+
+Another good weapon choice is the Magma Wyrm’s Scalesword. This weapon can deal fire damage, which can be beneficial against certain enemies. Its skill, while not the best for sword swinging, is cool and easy to use. This weapon is not hard to get, making it a viable choice for your build.
+
+If you want to focus more on the Faith aspect of your build, Ordovisis’s Greatsword is an excellent choice as it deals Holy damage. This weapon, combined with Faith-based incantations like Lightning Strike or Frenzy Burst, can create a powerful and flexible build.
+
+Remember that the effectiveness of these weapons can also depend on other factors like your stat allocation, playstyle, and the specific enemies you're facing. Experiment with these weapons and see which one fits your playstyle the best.",0.1509,0.1132,0.0061,0.7
+What is a good weapon in Elden Ring for doing high bleed damage?,Gizas Wheel is a good weapon for high bleed damage.,"The Venomous Fang is a great weapon in Elden Ring for doing high bleed damage. This weapon is unique as it inflicts ""Deadly Poison"" instead of regular poison on enemies, dealing substantial damage over time. Moreover, if you acquire two Venomous Fang weapons, you can set them to different affinities, allowing you to build up three status effects at once: Deadly Poison, Bleed, and Frost. Applying the Blood affinity to the main hand weapon and the Frost affinity to the offhand weapon will enable this. You can enhance the weapon's poise-break potential by using the Cragblade Ash of War. Further damage can be dealt by using the Poison Flower Blooms Twice Ash of War when an enemy is poisoned. Several equipment and talismans like Kindred of Rot's Exaltation, Rotten Winged Sword Insignia, Millicent's Prosthesis, Thorny Cracked Crystal Tear and Mushroom Crown can greatly enhance the damage output of the Venomous Fang.",0.0848,0.0848,0.0121,0.5714
+What are some ideas for a Miquella Build in Elden Ring?,"Since Miquella doesn't use a weapon, a build focused on holy incantations or spirit ashes would fit his theme well.","For a Miquella build in Elden Ring, it seems like you're going for a more magic-oriented playstyle. Here are a few ideas:
+
+1. **Spirit Ashes**: Since Miquella is known for getting others to be the muscle for him, Spirit Ashes would be very appropriate. This would allow you to summon phantoms to fight for you.
+
+2. **Ring of Light Incantation**: This would be a central part of the build. Miquella is associated with the Light, so it makes sense to use this.
+
+3. **Crown of Miquella**: This could fit the aesthetic of the build and provide useful bonuses.
+
+4. **Holy Incantations**: Due to the holy, light-oriented nature of Miquella, holy incantations would fit well with this build.
+
+5. **St Trina Weapons**: These could be added as secondary weapons, even though Miquella doesn't traditionally use weapons. St Trina weapons could be justified because of the connection between Miquella and St Trina.
+
+6. **Light Armor Sets**: To match the theme of light, consider wearing light armor sets. These will help you with faster mobility and better magic casting.
+
+7. **Boosting Faith Stat**: Since you'll be heavily relying on incantations, increasing your Faith stat would be beneficial.
+
+Remember, this game is all about experimenting and finding what fits your personal playstyle. You can always tweak this build to better suit your preferences.",0.1469,0.0816,0.0076,0.8571
+What skills in Elden Ring are good for use with a strength build to increase damage?,The Royal Knight's Resolve ashes of war skill.,"For a strength build in Elden Ring, there are several skills and spells that can help increase your damage output. You can use Siluria’s Greattree which pairs well with golden vow, erdree’s blessing, bestial vitality, defensive talismans and physic buffs to outtrade most enemies. 
+
+If you're running a Faith/Strength build, Ordovisis’s Greatsword for Holy damage and Cross-Naginata with Flame Strike for Fire damage are good weapon choices. Lightning Strike and Frenzy Burst are useful incantations for this build. 
+
+Some useful talismans for this build include shard of alexander, two hand talisman, lord of bloods exultation, and health or poise talismans. 
+
+In terms of buffs, golden vow and flame grant me strength are good choices. Golden vow boosts damage and defense, while flame grant me strength boosts physical and fire damage. Bloodflame blade is another good incantation buff that works well with flame grant me strength.
+
+Remember, the effectiveness of these skills can vary based on your playstyle and the specific enemies you're facing, so it's always a good idea to experiment and find what works best for you.",0.041,0.0308,0.0021,0.0
