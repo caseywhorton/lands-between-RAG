@@ -3,7 +3,6 @@ from dotenv import load_dotenv
 from sentence_transformers import SentenceTransformer
 from openai import OpenAI
 from pinecone import Pinecone
-from sklearn.metrics.pairwise import cosine_similarity
 
 # Load environment variables
 load_dotenv()
@@ -39,28 +38,32 @@ def rerank_documents(query: str, documents: list, client):
     return list(reranked_docs), list(reranked_scores)
 
 
+
 def get_top_matches(query: str, top_k: int = 5, rerank: bool = False):
     query_embedding = embedding_model.encode(query).tolist()
     results = index.query(vector=query_embedding, top_k=top_k, include_metadata=True)
-
+    
+    #print("Raw Pinecone results:", results)  # DEBUG
+    
     docs = []
     original_scores = []
     
-    for match in results['matches']:
-        docs.append(match['metadata'].get('text', ''))
-        original_scores.append(match['score'])
+    for match in results.get('matches', []):
+        #print("Match metadata:", match['metadata'])  # DEBUG
+        #docs.append(match['metadata'].get('text', ''))
+        docs.append(match['metadata'].get('full_text', ''))
 
+        original_scores.append(match['score'])
+    
     if rerank:
-        # Simple rerank: cosine similarity between query and doc embedding
         doc_embeddings = [embedding_model.encode(doc) for doc in docs]
         reranked_scores = [cosine_similarity([query_embedding], [emb])[0][0] for emb in doc_embeddings]
-
-        # Sort by reranked scores (descending)
         reranked = sorted(zip(docs, original_scores, reranked_scores), key=lambda x: x[2], reverse=True)
-        docs, original_scores, reranked_scores = zip(*reranked)
+        docs, original_scores, reranked_scores = zip(*reranked) if reranked else ([], [], [])
     else:
-        reranked_scores = original_scores  # fallback: same as original
-
+        reranked_scores = original_scores
+    
+    print(f"Docs count: {len(docs)}")  # DEBUG
     return list(docs), list(original_scores), list(reranked_scores)
 
 
