@@ -206,6 +206,8 @@ Navigate to the **rag_streamlit_app** directory and run:
 
 `streamlit app`
 
+<img src="img/streamlit_img.jpg" alt="Basic query in the streamlit app" width="500" height="300">
+
 ---
 
 ## 🧪 Testing
