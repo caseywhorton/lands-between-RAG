@@ -76,8 +76,46 @@ Including a Reddit post that discusses the **Venomous Fang** weapon provides the
 ## 🛠️ Setup Instructions
 
 1. Set up a **SageMaker Studio Domain**.
-2. Log into **Pinecone** using your GitHub account.
+2. Log into **Pinecone**[https://www.pinecone.io] using your GitHub account.
 3. Create a **JupyterLab environment** inside SageMaker.
-4. Install required libraries:
-   ```bash
-   pip install openai pinecone-client pandas
+4. Create an **OpenAI**[https://platform.openai.com/docs/overview] developer account and obtain an openAI API key
+5. Obtain a Reddit user id and developer credentials
+
+### PRAW Layer for Web Scraper
+
+Using python 3.10 for everything.  
+
+`docker run --rm -v $(pwd):/var/task \
+    public.ecr.aws/lambda/python:3.10 \
+    /bin/bash -c "pip install praw -t /var/task/python/ && exit"`
+
+`zip -r praw_layer.zip python/`
+
+### Elastic Container Registry for Docker Containers
+
+`aws ecr create-repository --repository-name <enter repo name`
+
+### Docker for Processing Jobs
+
+Both processing jobs take place in Sagemaker. The models used are too big for Lambda. During setup, build these two containers and push to Amazon ECR. The below commands will create the containers with the correct infrastructure to run on AWS but being build on a Mac/linux.
+
+_Docker container for embedding_
+`docker build --platform linux/amd64 --no-cache -t rag-lambda .`  
+
+_Docker container for evaluation_
+`docker build --platform linux/amd64 --no-cache -t rag-lambda-eval .`
+
+### Cloud Development Toolkit (CDK)
+
+After running the below commands, you can add the artifacst the repo and adjust the directory.
+
+```
+mkdir sagemaker-cdk-project        
+cd sagemaker-cdk-project
+python3 -m venv .venv 
+Source .venv/bin/activate
+npm install -g aws-cdk 
+pip install aws-cdk-lib constructs boto3
+cdk init app --language python
+```
+
