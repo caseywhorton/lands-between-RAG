@@ -1,0 +1,37 @@
+[
+    {
+      "query": "What is the Venomous Fang weapon in Elden Ring?",
+      "expected_answer": "Venomous Fang is a claw weapon in Elden Ring that causes poison buildup.",
+      "relevant_chunks": [
+        "Venomous Fang is located in the Gael Tunnel...",
+        "The weapon causes a high amount of poison buildup...",
+        "It's a claw-type weapon and scales with Dexterity..."
+      ]
+    },
+    {
+      "query": "What is the best Strenght/Faith weapon in Elden Ring?",
+      "expected_answer": "Using the Blasphemous Blade, you can 2-hand the weapon and use the sword's ability to deal high damage.",
+      "relevant_chunks": [
+        "If you want ”cake-walk” you can just 2handed Blasphemous Blade and use ” Taker’s Flame ” ability, personally im not doing that because it destroys all fun from this game but it’s just my opinion."
+      ]
+    },
+    {
+        "query": "What is Ghizas wheel in Elden Ring?",
+        "expected_answer": "Ghiza’s Wheel is a Colossal Weapon in Elden Ring, modeled after a massive spiked iron wheel. It's essentially a brutal, oversized buzzsaw on a stick. It does standard and bleed damage.",
+        "relevant_chunks": [
+            "Gizas wheel is such a fun weapon! Can do some crazy bleed damage."
+        ]
+    },
+    {
+        "query":"What are some ideas for a Miquella Build in Elden Ring?",
+        "expected_answer":"Since Miquella doesn't use a weapon, a build focused on holy incantations or spirit ashes would fit his theme well.",
+        "relevant_chunks": ["I feel like only holy incantations. No weapons really fit the vibe of Miquella. ",
+    "Maybe you could argue the St Trina weapons because he kind of is St Trina, but pure Miquella wouldn't have weapons. His whole thing is getting other people to be the muscle for him, so spirit ashes would be very appropriate"]
+    },
+    {
+        "query":"What is the Royal Knight's Resolve ashes of war in Elden Ring?",
+        "expected_answer": "Royal Knight’s Resolve is a powerful Ash of War in Elden Ring that enhances your next melee attack with a massive damage boost. It’s a favorite among strength builds, critical strike setups, and one-shot strategies",
+        "relevant_chunks": "RKR and Endure will let you get some real big hits"
+    }
+  ]
+  
