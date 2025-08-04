@@ -1,0 +1,4 @@
+sentence-transformers==2.2.2
+boto3
+pinecone
+huggingface_hub==0.13.4
