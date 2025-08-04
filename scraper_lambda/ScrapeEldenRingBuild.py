@@ -15,7 +15,7 @@ reddit = praw.Reddit(
 s3 = boto3.client("s3")
 
 # S3 bucket name (set in Lambda environment variables)
-S3_BUCKET = "webscrape-lands-between"
+S3_BUCKET = ""
 
 def fetch_subreddit_threads(subreddit_name, limit=10, comment_limit=5):
     """Fetches posts from a subreddit and formats them for storage in S3."""
