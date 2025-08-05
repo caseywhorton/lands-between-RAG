@@ -4,6 +4,8 @@
 
 A Retrieval-Augmented Generation (RAG) application that helps users explore up-to-date **Elden Ring character builds** by leveraging recent Reddit discussions. Reduces hallucinations and increases relevance by grounding responses in real community knowledge.
 
+For evaluating the RAG pipeline, a 30-day period of gathering reddit posts from a sub-reddit focused on Elden Ring Builds was set up. After every 'scrape' of the posts on the website, the index is updated with the embedded vectors and an evaluation script answers 5 queries each with the top-5 posts based on similarity. At the end of the 30-day period, an evaluation of the daily metrics is done.
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/downloads/)
 
@@ -56,7 +58,7 @@ Services Used: _AWS Sagemaker AI, AWS EventBridge, AWS Lambda, AWS S3, Docker, P
 - **Pull test data**: Test data is a CSV with test queries and sample responses
 - **Preprocessing**: Clean text (strip markdown, remove boilerplate and stop words)
 - **Embedding Model**: Use the same embedding model to embed test query text
-- **Retrieval**: Semantic search in Pinecone for top-k relevant posts for each test query
+- **Retrieval**: Semantic search in Pinecone for top-5 relevant posts for each test query
 - **Augmentation**: Inject retrieved content into LLM context
 - **Generation**: GPT-3.5/4 produces grounded, accurate responses
 - **Evaluate**: Evaluate responses using NLP metrics, save results to S3
@@ -64,7 +66,7 @@ Services Used: _AWS Sagemaker AI, AWS EventBridge, AWS Lambda, AWS S3, Docker, P
 ### 4. Query and Generate Responses
 Services Used: _Streamlit, Pinecone, OpenAI_
 - **User Query**: "What's a good poison build?"
-- **Retrieval**: Semantic search in Pinecone for top-k relevant posts
+- **Retrieval**: Semantic search in Pinecone for top-5 relevant posts
 - **Augmentation**: Inject retrieved content into LLM context
 - **Generation**: GPT-3.5/4 produces grounded, accurate responses
 
