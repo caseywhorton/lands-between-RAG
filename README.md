@@ -1,4 +1,4 @@
-# 🛡️ Lands Between RAG
+# Lands Between RAG
 
 > _Not all models are the same._
 
@@ -9,7 +9,7 @@ A Retrieval-Augmented Generation (RAG) application that helps users explore up-t
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ```bash
 # Clone the repository
@@ -26,33 +26,43 @@ cp .env.example .env
 # Edit .env with your API keys
 ```
 
-## 🏗️ Architecture
+## Architecture
 
-```
-Reddit Posts → S3 → Processing (SageMaker) → Pinecone → Query Interface
-     ↓             ↓                           ↓
-  Raw JSON    Embeddings              Semantic Search
-               all-mpnet-base-v2         + GPT-4
-```
+<img src="img/whorton_aws_rag.png" alt="Solution Architecture Overview" width="1000" height="700">
+  
 
 ---
 
-## ⚙️ Process Overview
+## Process Overview
 
 The RAG pipeline follows three main stages:
 
-### 1. 📥 Ingest Reddit Posts into S3
+### 1. Ingest Reddit Posts into S3
+Services Used: _AWS EventBridge, AWS Lambda, AWS S3, Reddit_
 - **Source**: Scrape relevant posts from Elden Ring subreddits using PRAW
 - **Storage**: Store raw post data (title, body, comments) in Amazon S3 as JSON
 - **Frequency**: Configurable cron job for fresh content
 
-### 2. 🔄 Transform and Embed Posts into Pinecone
-- **Preprocessing**: Clean text (strip markdown, remove boilerplate)
+
+### 2. Transform and Embed Posts into Pinecone
+Services Used: _AWS Sagemaker AI, AWS EventBridge, AWS Lambda, Docker, Pinecone_
+- **Preprocessing**: Clean text (strip markdown, remove boilerplate and stop words)
 - **Embedding Model**: `all-mpnet-base-v2` for high-quality vector representations
 - **Vector Store**: Pinecone index with metadata (post ID, subreddit, weapon tags)
 - **Processing**: SageMaker for scalable batch processing
 
-### 3. 🤖 Query and Generate Responses
+### 3. Evaluate the RAG Application with Test Set
+Services Used: _AWS Sagemaker AI, AWS EventBridge, AWS Lambda, AWS S3, Docker, Pinecone, OpenAI_
+- **Pull test data**: Test data is a CSV with test queries and sample responses
+- **Preprocessing**: Clean text (strip markdown, remove boilerplate and stop words)
+- **Embedding Model**: Use the same embedding model to embed test query text
+- **Retrieval**: Semantic search in Pinecone for top-k relevant posts for each test query
+- **Augmentation**: Inject retrieved content into LLM context
+- **Generation**: GPT-3.5/4 produces grounded, accurate responses
+- **Evaluate**: Evaluate responses using NLP metrics, save results to S3
+
+### 4. Query and Generate Responses
+Services Used: _Streamlit, Pinecone, OpenAI_
 - **User Query**: "What's a good poison build?"
 - **Retrieval**: Semantic search in Pinecone for top-k relevant posts
 - **Augmentation**: Inject retrieved content into LLM context
@@ -60,7 +70,7 @@ The RAG pipeline follows three main stages:
 
 ---
 
-## 🤖 Models & Performance
+## Models & Performance
 
 | Component     | Model                | Performance Notes              | Cost   |
 |---------------|----------------------|--------------------------------|--------|
@@ -76,22 +86,22 @@ The RAG pipeline follows three main stages:
 
 ---
 
-## 💡 Key Insights
+## Key Insights
 
-✅ **What Works:**
+**What Works:**
 - Embedding `full_text` (post + top comments) improves relevance
 - Regex cleaning of markdown formatting enhances embedding quality
 - Pinecone similarity scores >0.7 indicate high relevance
 - Recent posts (< 30 days) provide better meta accuracy
 
-❌ **Limitations:**
+**Limitations:**
 - Without RAG context: *"I don't have access to current Reddit discussions"*
 - Older posts may contain outdated build information
 - Processing latency increases with context size
 
 ---
 
-## 📊 Case Study: Venomous Fang Weapon
+## Case Study: Venomous Fang Weapon
 
 ### Without RAG Context
 
@@ -106,11 +116,11 @@ The RAG pipeline follows three main stages:
 
 > The Venomous Fang is a unique fist weapon in Elden Ring known for its rapid strikes and native poison status. It's lightweight and can inflict "Deadly Poison" on enemies, which deals significant damage over time. It can be enhanced by applying Poison or Occult Affinities, tripling the poison damage or increasing the poison buildup respectively...
 
-**Result**: ✨ Accurate, detailed, community-validated information
+**Result**: Accurate, detailed, community-validated information
 
 ---
 
-## 🛠️ Setup & Deployment
+## Setup & Deployment
 
 ### Prerequisites
 
@@ -180,12 +190,12 @@ cdk deploy
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 lands-between-RAG/
 ├── rag_streamlit_app/ # Streamlit application for querying index
-├── ├── test_queries.json # dictionary for RAG evaluation
+├── └──  test_queries.json # dictionary for RAG evaluation
 ├── scraper_lambda/ # lambda function for scraping Reddit
 ├── Docker/
 │   ├── embedding/         # SageMaker processing container and code
@@ -198,19 +208,19 @@ lands-between-RAG/
 
 ---
 
-## 🚀 Usage
+## Usage
 
 ### Basic Query
 
 Navigate to the **rag_streamlit_app** directory and run:  
 
-`streamlit app`
+`streamlit run app.py`
 
-<img src="img/streamlit_img.jpg" alt="Basic query in the streamlit app" width="500" height="300">
+<img src="img/streamlit_img.jpg" alt="Basic query in the streamlit app" width="1000" height="500">
 
 ---
 
-## 🧪 Testing
+## Testing
 
 For testing offline, run Docker containers with a .env file.  
 
@@ -224,7 +234,7 @@ docker run \
 
 ---
 
-## 📈 Monitoring & Metrics
+## Monitoring & Metrics
 
 - **CloudWatch**: Processing job metrics, Lambda execution times
 - **Pinecone**: Query latency, index usage
@@ -232,7 +242,7 @@ docker run \
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
@@ -242,13 +252,13 @@ docker run \
 
 ---
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - [FromSoftware](https://www.fromsoftware.jp/) for creating Elden Ring
 - [r/Eldenring](https://reddit.com/r/EldenringBuilds) community for build discussions
@@ -257,8 +267,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-## 📞 Support
+## Support
 
-- 🐛 **Bug Reports**: [GitHub Issues](https://github.com/caseywhorton/lands-between-RAG/issues)
-- 💡 **Feature Requests**: [GitHub Discussions](https://github.com/caseywhorton/lands-between-RAG/discussions)
-- 📧 **Contact**: [caseywhorton@gmail.com](mailto:caseywhorton@gmail.com)
+- **Bug Reports**: [GitHub Issues](https://github.com/caseywhorton/lands-between-RAG/issues)
+- **Feature Requests**: [GitHub Discussions](https://github.com/caseywhorton/lands-between-RAG/discussions)
+- **Contact**: [caseywhorton@gmail.com](mailto:caseywhorton@gmail.com)
