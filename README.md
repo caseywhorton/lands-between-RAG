@@ -1,14 +1,18 @@
-# Lands Between RAG
+# Lands Between RAG Application
 
-> _Not all models are the same._
+This project is a Retrieval-Augmented Generation (RAG) application designed to help players explore up-to-date **Elden Ring character builds** by drawing on the latest discussions from Reddit. The goal is to surface recent, community-driven insights that go beyond what a static model can provide, giving players fresh ideas for optimizing their builds.  
 
-A Retrieval-Augmented Generation (RAG) application that helps users explore up-to-date **Elden Ring character builds** by leveraging recent Reddit discussions. Reduces hallucinations and increases relevance by grounding responses in real community knowledge.
+LLMs aren’t always up to date, so they often miss recent shifts in game metas or new releases. For example, GPT-4 (released March 2023) was trained before Elden Ring’s expansion, Shadow of the Erdtree (June 2024), so it has no knowledge of that content. To solve this, I built data transformation and RAG pipelines that generate a custom corpus of expansion data and feed the model relevant context at time of inference. This was it can answer questions about the new content with accuracy and let the user stay current on the game.
 
-For evaluating the RAG pipeline, a 30-day period of gathering reddit posts from a sub-reddit focused on Elden Ring Builds was set up. After every 'scrape' of the posts on the website, the index is updated with the embedded vectors and an evaluation script answers 5 queries each with the top-5 posts based on similarity. At the end of the 30-day period, an evaluation of the daily metrics is done.
+Keeping the corpus fresh requires more than manual updates. It requires for an architectural solution. I designed and automated the pipeline using cloud-based services on Amazon Web Services (AWS).
+
+To evaluate the pipeline, Reddit posts from a community dedicated to Elden Ring builds were collected daily over a 30-day period. After each scrape, the index was refreshed with newly embedded vectors, and an evaluation script generated responses to five benchmark queries using the top-five most similar posts. At the end of the 30 days, performance was assessed using daily metrics to measure retrieval quality and consistency.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/downloads/)
 
+## Example Output
+<img src="img/elden_ring_build_finder_recent.jpg" alt="Sample Prompt for Recent Builds" width="800" height="500">
 ---
 
 ## Quick Start
@@ -28,9 +32,55 @@ cp .env.example .env
 # Edit .env with your API keys
 ```
 
+## Key Insights
+
+1. **RAG Applications and Relevance**  
+   Retrieval-Augmented Generation (RAG) applications can provide a corpus of recent, relevant data for a specific use case. For example, using recent data for a newly released video game allows even an older LLM to generate responses based on up-to-date information.
+
+2. **Infrastructure Requirements**  
+   RAG applications for recent data require an automated infrastructure to update and evaluate text data continuously, ensuring the LLM has access to fresh, accurate information.
+
+3. **Evaluating LLM Accuracy with Context**  
+   Assessing the accuracy of an LLM with additional context primarily measures the quality of the data in the corpus. If the corpus contains minimal or flawed information on a subject, evaluation metrics are expected to be low, regardless of the model’s underlying capability.
+
+---
+
+### What Works
+- Embedding the `full_text` (post + top comments) improves relevance.  
+- Cleaning markdown formatting with regex enhances embedding quality.  
+- Pinecone similarity scores > 0.7 indicate high relevance.  
+- Including time-dependent information (e.g., timestamps for Reddit posts) allows recent posts to be accurately retrieved and contextualized.
+
+---
+
+### Limitations
+- Without RAG context, the model may respond: *"I don't have access to current Reddit discussions."*  
+- Evaluating the RAG pipeline: metrics are useful for testing the retrieval of expected, straightforward information, but assessing qualitative answers is more challenging since there is no single 'correct' response.
+
+---
+
+## Case Study: Venomous Fang Weapon
+
+### Without RAG Context
+
+**Query**: *"Can you briefly tell me about the Venomous Fang weapon in Elden Ring?"*
+
+**Response**: 
+> As of now, specific details about the Venomous Fang weapon in Elden Ring are not available...
+
+### With RAG Context (Retrieved from Reddit)
+
+**Same Query** → **Retrieved 3 relevant posts** → **Enhanced Response**:
+
+> The Venomous Fang is a unique fist weapon in Elden Ring known for its rapid strikes and native poison status. It's lightweight and can inflict "Deadly Poison" on enemies, which deals significant damage over time. It can be enhanced by applying Poison or Occult Affinities, tripling the poison damage or increasing the poison buildup respectively...
+
+**Result**: Accurate, detailed, community-validated information
+
+---
+
 ## Architecture
 
-<img src="img/whorton_aws_rag.png" alt="Solution Architecture Overview" width="1000" height="700">
+<img src="img/whorton_aws_rag.png" alt="Solution Architecture Overview" width="1000" height="300">
   
 
 ---
@@ -44,7 +94,6 @@ Services Used: _AWS EventBridge, AWS Lambda, AWS S3, Reddit_
 - **Source**: Scrape relevant posts from Elden Ring subreddits using PRAW
 - **Storage**: Store raw post data (title, body, comments) in Amazon S3 as JSON
 - **Frequency**: Configurable cron job for fresh content
-
 
 ### 2. Transform and Embed Posts into Pinecone
 Services Used: _AWS Sagemaker AI, AWS EventBridge, AWS Lambda, Docker, Pinecone_
@@ -82,43 +131,26 @@ Services Used: _Streamlit, Pinecone, OpenAI_
 | Baseline      | `bert-base-uncased` | Poor performance (comparison)  | Free   |
 
 ### Evaluation Metrics
-- **Relevance Score**: 8.5/10 (with context) vs 3.2/10 (without)
-- **Response Time**: ~2.3s average
-- **Context Window**: 4,096 tokens (includes 3-5 relevant posts)
 
----
 
-## Key Insights
+**Metric Descriptions:**
 
-**What Works:**
-- Embedding `full_text` (post + top comments) improves relevance
-- Regex cleaning of markdown formatting enhances embedding quality
-- Pinecone similarity scores >0.7 indicate high relevance
-- Recent posts (< 30 days) provide better meta accuracy
+- **rouge1**: Measures unigram (single word) overlap between the generated text and reference text.  
+- **rougeL**: Measures the longest common subsequence between the generated text and reference text.  
+- **bleu**: Measures n-gram precision of the generated text against reference text.
+   - For example: not only does "short" and/or "sword" appear, but "short sword" appears
+- **keyword_match**: Measures the proportion of relevant keywords in the generated text that match the reference.  
+- **chunk_overlap_score**: Measures the proportion of text chunks in the generated output that overlap with the reference, capturing content-level similarity.
 
-**Limitations:**
-- Without RAG context: *"I don't have access to current Reddit discussions"*
-- Older posts may contain outdated build information
-- Processing latency increases with context size
 
----
+<img src="img/evaluation_output.png" alt="30-day Evaluation Output" width="1000" height="500">
 
-## Case Study: Venomous Fang Weapon
-
-### Without RAG Context
-
-**Query**: *"Can you briefly tell me about the Venomous Fang weapon in Elden Ring?"*
-
-**Response**: 
-> As of now, specific details about the Venomous Fang weapon in Elden Ring are not available...
-
-### With RAG Context (Retrieved from Reddit)
-
-**Same Query** → **Retrieved 3 relevant posts** → **Enhanced Response**:
-
-> The Venomous Fang is a unique fist weapon in Elden Ring known for its rapid strikes and native poison status. It's lightweight and can inflict "Deadly Poison" on enemies, which deals significant damage over time. It can be enhanced by applying Poison or Occult Affinities, tripling the poison damage or increasing the poison buildup respectively...
-
-**Result**: Accurate, detailed, community-validated information
+**Interpretation:** 
+The test queries and expected responses were designed to evaluate the RAG pipeline and measure how corpus growth impacted the accuracy of the model’s answers. The expectation was that as the corpus expanded, more relevant text would appear for the queries, improving alignment with the expected responses. While the model’s answers did evolve over time, they did not consistently match the expected outputs.  
+For 3 of the 5 test queries, I focused on straightforward descriptions of weapons or armor from the base game or the expansion. In these cases, performance depended heavily on whether the index contained text explicitly describing the item. For example, the Venomous Fang weapon was frequently discussed by players due to its popularity in certain builds, which led to strong evaluation scores. By contrast, Royal Knight’s Resolve was rarely mentioned, resulting in weaker metrics.  
+For the other 2 queries, I tested the pipeline on generating build ideas—a more subjective task. My expected responses reflected common community strategies, but the evaluation metrics did not improve much, which is not surprising given the open-ended nature of the queries.  
+Overall, these results suggest that metrics like ROUGE, BLEU, and context-chunk scoring work well when evaluating factual descriptions or definitions  where there is clear ground truth in the corpus. However, they are less effective for subjective or creative queries, such as build recommendations.  
+ While my evaluation design has limitations, it highlights both the strengths and weaknesses of text-based metrics for assessing RAG pipelines. 
 
 ---
 
@@ -153,16 +185,16 @@ Build multi-platform containers for AWS deployment:
 ```bash
 # Embedding processor
 docker build --platform linux/amd64 --no-cache -t rag-embedding .
-docker tag rag-embedding:latest 123456789012.dkr.ecr.us-east-1.amazonaws.com/rag-embedding:latest
+docker tag rag-embedding:latest <acct>.dkr.ecr.us-east-1.amazonaws.com/rag-embedding:latest
 
 # Evaluation processor  
 docker build --platform linux/amd64 --no-cache -t rag-evaluation .
-docker tag rag-evaluation:latest 123456789012.dkr.ecr.us-east-1.amazonaws.com/rag-evaluation:latest
+docker tag rag-evaluation:latest <acct>.dkr.ecr.us-east-1.amazonaws.com/rag-evaluation:latest
 
 # Push to ECR
-aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 123456789012.dkr.ecr.us-east-1.amazonaws.com
-docker push 123456789012.dkr.ecr.us-east-1.amazonaws.com/rag-embedding:latest
-docker push 123456789012.dkr.ecr.us-east-1.amazonaws.com/rag-evaluation:latest
+aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <acct>.dkr.ecr.us-east-1.amazonaws.com
+docker push <acct>.dkr.ecr.us-east-1.amazonaws.com/rag-embedding:latest
+docker push <acct>.dkr.ecr.us-east-1.amazonaws.com/rag-evaluation:latest
 ```
 
 ### Lambda Layer (PRAW)
