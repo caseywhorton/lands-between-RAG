@@ -43,6 +43,9 @@ cp .env.example .env
 3. **Evaluating LLM Accuracy with Context**  
    Assessing the accuracy of an LLM with additional context primarily measures the quality of the data in the corpus. If the corpus contains minimal or flawed information on a subject, evaluation metrics are expected to be low, regardless of the model’s underlying capability.
 
+4. **Content and Context Matters**
+   Because the content is passed with every prompt, including instructions on using recent data and timestamps ensures the model responses include temporal information.
+
 ---
 
 ### What Works
