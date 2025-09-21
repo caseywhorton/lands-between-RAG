@@ -2,9 +2,9 @@
 
 This project is a Retrieval-Augmented Generation (RAG) application designed to help players explore up-to-date **Elden Ring character builds** by drawing on the latest discussions from Reddit. The goal is to surface recent, community-driven insights that go beyond what a static model can provide, giving players fresh ideas for optimizing their builds.  
 
-LLMs aren’t always up to date, so they often miss recent shifts in game metas or new releases. For example, GPT-4 (released March 2023) was trained before Elden Ring’s expansion, Shadow of the Erdtree (June 2024), so it has no knowledge of that content. To solve this, I built data transformation and RAG pipelines that generate a custom corpus of expansion data and feed the model relevant context at time of inference. This was it can answer questions about the new content with accuracy and let the user stay current on the game.
+LLMs aren’t always up to date, so they often miss recent shifts in game metas or new releases. For example, GPT-4 (released March 2023) was trained before Elden Ring’s expansion, Shadow of the Erdtree (June 2024), so it has no knowledge of that content. To solve this, I built data transformation and RAG pipelines that generate a custom corpus of expansion data and feed the model relevant context at time of inference. This way it can answer questions about the new content with accuracy and let the user stay current on the game.
 
-Keeping the corpus fresh requires more than manual updates. It requires for an architectural solution. I designed and automated the pipeline using cloud-based services on Amazon Web Services (AWS).
+Keeping the corpus fresh requires more than manual updates. It requires an architectural solution. I designed and automated the pipeline using cloud-based services on Amazon Web Services (AWS).
 
 To evaluate the pipeline, Reddit posts from a community dedicated to Elden Ring builds were collected daily over a 30-day period. After each scrape, the index was refreshed with newly embedded vectors, and an evaluation script generated responses to five benchmark queries using the top-five most similar posts. At the end of the 30 days, performance was assessed using daily metrics to measure retrieval quality and consistency.
 
@@ -81,7 +81,6 @@ cp .env.example .env
 ## Architecture
 
 <img src="img/whorton_aws_rag.png" alt="Solution Architecture Overview" width="1000" height="300">
-  
 
 ---
 
