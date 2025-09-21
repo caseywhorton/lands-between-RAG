@@ -142,7 +142,7 @@ Services Used: _Streamlit, Pinecone, OpenAI_
 - **chunk_overlap_score**: Measures the proportion of text chunks in the generated output that overlap with the reference, capturing content-level similarity.
 
 
-<img src="img/evaluation_output.png" alt="30-day Evaluation Output" width="1000" height="500">
+<img src="img/evaluation_output.jpg" alt="30-day Evaluation Output" width="1000" height="500">
 
 **Interpretation:** 
 The test queries and expected responses were designed to evaluate the RAG pipeline and measure how corpus growth impacted the accuracy of the model’s answers. The expectation was that as the corpus expanded, more relevant text would appear for the queries, improving alignment with the expected responses. While the model’s answers did evolve over time, they did not consistently match the expected outputs.  
