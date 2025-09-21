@@ -32,6 +32,11 @@
         "query":"What skills in Elden Ring are good for use with a strength build to increase damage?",
         "expected_answer": "The Royal Knight's Resolve ashes of war skill.",
         "relevant_chunks": "RKR and Endure will let you get some real big hits"
+    },
+    {
+      "query":"What is the Rakshasa Armor in Elden Ring, and what kind of build is it good for?",
+      "expected_answer": "Rakshasa Set is an Armor Set in Elden Ring. It is a brand new Armor Set in the Shadow of the Erdtree DLC. Sets of Armor in Elden Ring are composed of four armor pieces which are Helms, Chest Armor, Gauntlets, and Leg Armor. This set boosts all damage dealt by the player by 2% for each piece, but increases damage taken by the player by 2%, this is reflected in the armor stats causing it to be a low damage negation set. ",
+     "relevant_chunks": ""
     }
   ]
   

@@ -13,8 +13,8 @@ reranked_scores = []
 
 if query:
     with st.spinner("Fetching answer..."):
-        matches, orig_scores, reranked_scores = get_top_matches(query, rerank=rerank_enabled)
-        answer = generate_answer(query, matches)
+        docs, metadata, original_scores, reranked_scores = get_top_matches(query, rerank=rerank_enabled)
+        answer = generate_answer(query, docs, metadata)
 
         st.subheader("📖 Answer")
         st.write(answer)
