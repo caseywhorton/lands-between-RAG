@@ -1,6 +1,6 @@
 # Lands Between RAG Application
 
-This project is a Retrieval-Augmented Generation (RAG) application designed to help players explore up-to-date **Elden Ring character builds** by drawing on the latest discussions from Reddit. The goal is to surface recent, community-driven insights that go beyond what a static model can provide, giving players fresh ideas for optimizing their builds.  
+This project is a Retrieval-Augmented Generation (RAG) application designed to help players explore up-to-date **Elden Ring character builds** by drawing on the latest discussions from Reddit.  This application can surface recent, community-driven insights that go beyond what a static model can provide, giving players fresh ideas for optimizing their builds.  This project showcases how we can customize the experience of using Generative AI, as well as how to operationalize a large language model for a use-case.
 
 LLMs aren’t always up to date, so they often miss recent shifts in game metas or new releases. For example, GPT-4 (released March 2023) was trained before Elden Ring’s expansion, Shadow of the Erdtree (June 2024), so it has no knowledge of that content. To solve this, I built data transformation and RAG pipelines that generate a custom corpus of expansion data and feed the model relevant context at time of inference. This way it can answer questions about the new content with accuracy and let the user stay current on the game.
 
